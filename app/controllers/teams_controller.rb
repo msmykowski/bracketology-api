@@ -6,7 +6,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    team = Team.find(params[:id])
+    team = Team.find_by name: (params[:name])
     players = team.players
     render json: players
   end
