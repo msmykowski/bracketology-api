@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'teams#index'
+  get '/teams', to: 'teams#index'
 
   get '/teams/:id', to: 'teams#show'
 
