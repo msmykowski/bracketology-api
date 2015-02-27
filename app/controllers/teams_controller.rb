@@ -11,4 +11,9 @@ class TeamsController < ApplicationController
     render json: players
   end
 
+  def rank
+    team = Team.order(params[:stat]).reverse
+    render json: team
+  end
+
 end
