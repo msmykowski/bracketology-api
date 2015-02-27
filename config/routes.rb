@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get '/teams', to: 'teams#index'
 
-  get '/teams/:name', to: 'teams#show'
+  get '/teams/:id', to: 'teams#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
