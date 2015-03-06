@@ -2,8 +2,7 @@ class ScoresController < ApplicationController
 
   def update_games
     last_game = Game.last
-    # if last_game.updated_at.to_i < (Time.now.to_i - 5)
-    if 0 > 1
+    if last_game.updated_at.to_i < (Time.now.to_i - 5)
       today_games = parse_games
       today_games.each do |game|
         update_game game
