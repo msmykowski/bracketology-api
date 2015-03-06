@@ -8,6 +8,6 @@ Rails.application.routes.draw do
 
   get 'players/rank/:stat', to: 'players#rank'
 
-  get 'scores/seed' => 'scores#seed'
-  
+  get 'scores/update' => 'scores#update_games'
+
 end

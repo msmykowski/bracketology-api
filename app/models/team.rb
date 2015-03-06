@@ -1,5 +1,6 @@
 class Team < ActiveRecord::Base
   has_many :players
+  has_many :games
 
   def basic
     team = {
@@ -11,4 +12,9 @@ class Team < ActiveRecord::Base
     }
     team
   end
+
+  def games
+    Game.where("home_team=? OR away_team=?",id,id)
+  end
+
 end
