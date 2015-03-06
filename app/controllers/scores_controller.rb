@@ -2,11 +2,14 @@ class ScoresController < ApplicationController
 
   def update_games
     last_game = Game.last
-    today_games = parse_games
-    if last_game.updated_at.to_i < (Time.now.to_i - 5)
+    # if last_game.updated_at.to_i < (Time.now.to_i - 5)
+    if 0 > 1
+      today_games = parse_games
       today_games.each do |game|
         update_game game
       end
+    else
+      today_games = Game.where("created_at>=? AND created_at<=?",last_game.created_at-5,last_game.created_at+5)
     end
     game_list = []
     today_games.each do |game|
