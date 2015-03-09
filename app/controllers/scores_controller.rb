@@ -20,17 +20,17 @@ class ScoresController < ApplicationController
 
   def update_game game
     db_game = Game.find_by(espn_id:game[:espn_id])
+    p game
     if db_game
-      if db_game.status == "Final"
-      elsif game[:status].match(/[APM]{2}/)
+      if game[:status].match(/[APM]{2}/)
       else
-        db_game.update(status:game[:status])
         home_score = game[:home][:score]
         db_game.home_obj[:team].update(wins:game[:home][:wins],losses:game[:home][:losses],rank:game[:home][:rank])
         db_game.home_obj[:score].update(first:home_score[:first],second:home_score[:second],ot:home_score[:ot],win:home_score[:win])
         away_score = game[:away][:score]
         db_game.away_obj[:team].update(wins:game[:away][:wins],losses:game[:away][:losses],rank:game[:away][:rank])
         db_game.away_obj[:score].update(first:away_score[:first],second:away_score[:second],ot:away_score[:ot],win:away_score[:win])
+        db_game.update(status:game[:status])
       end
     else
       new_game = Game.new(espn_id:game[:espn_id],status:game[:status],home_team:game[:home][:id],away_team:game[:away][:id])
