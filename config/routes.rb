@@ -10,4 +10,7 @@ Rails.application.routes.draw do
 
   get 'scores/update' => 'scores#update_games'
 
+  get 'bracket' => 'bracket#index'
+  get 'bracket/info' => 'bracket#info'
+
 end

@@ -20,7 +20,6 @@ class ScoresController < ApplicationController
 
   def update_game game
     db_game = Game.find_by(espn_id:game[:espn_id])
-    p game
     if db_game
       if game[:status].match(/[APM]{2}/)
       else
@@ -35,6 +34,10 @@ class ScoresController < ApplicationController
     else
       new_game = Game.new(espn_id:game[:espn_id],status:game[:status],home_team:game[:home][:id],away_team:game[:away][:id])
       if new_game.save
+        bracket_check = BracketGame.where("(team_one_id=? AND team_two_id=?) OR (team_one_id=? AND team_two_id=?)",game[:home][:id],game[:away][:id],game[:away][:id],game[:home][:id])
+        if bracket_check.length > 0
+          bracket_check[0].update(game_id:new_game.id)
+        end
         home_score = Score.new(game:new_game,first:0, second:0, ot:0, win:false,team:"home")
         away_score = Score.new(game:new_game,first:0, second:0, ot:0, win:false,team:"away")
         home_score.save
@@ -118,6 +121,11 @@ class ScoresController < ApplicationController
       }
     }
     team_data
+  end
+
+  def update_bracket game
+    # teams = game.
+
   end
 
   # Team.all.each{|team| team.update(espn_id:team.img_url.match(/\/500\/(\d+).png/)[1]) }
