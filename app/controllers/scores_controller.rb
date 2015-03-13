@@ -35,10 +35,9 @@ class ScoresController < ApplicationController
         db_game.away_obj[:score].update(first:away_score[:first],second:away_score[:second],ot:away_score[:ot],win:away_score[:win])
         db_game.update(status:game[:status])
       end
-      # if game[:status] == "Final" && bracket_check
-      #   one = Bracket.find_by("location=? AND (team_id=? OR team_id=?)",bracket_check.team_one,game[:home][:id],game[:away][:id])
-      #   two = Bracket.find_by("location=? AND (team_id=? OR team_id=?)",bracket_check.team_two,game[:home][:id],game[:away][:id])
-      # end
+      if game[:status].match("Final") && bracket_check[0]
+        bracket_check[0].check_winner
+      end
     else
       new_game = Game.new(espn_id:game[:espn_id],status:game[:status],home_team:game[:home][:id],away_team:game[:away][:id])
       if new_game.save
@@ -51,6 +50,9 @@ class ScoresController < ApplicationController
         home_score.save
         away_score.save
         new_game.update(away_score:away_score.id,home_score:home_score.id)
+        if game[:status].match("Final") && bracket_check[0]
+          bracket_check[0].check_winner
+        end
       end
     end
   end

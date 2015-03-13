@@ -39,6 +39,38 @@ class BracketController < ApplicationController
     render json: bracket_games
   end
 
+  def games
+    games = BracketGame.all
+    game_list = {}
+    games.each do |game|
+      if game.game_id
+        game.game
+        game_data = Game.find(game.game_id)
+        score_data = game_data.mm_serialize
+        game_id = "#{game.team_one}-#{game.team_two}"
+        game_list[game_id] = score_data
+      elsif (game.team_one_id || game.team_two_id)
+        score_data = pending_game game
+        game_id = "#{game.team_one}-#{game.team_two}"
+        game_list[game_id] = score_data
+      end
+    end
+    render json: game_list
+  end
+
+  def pending_game bracket_game
+    game = {
+      bracket_game[:team_one] => {},
+      bracket_game[:team_two] => {}
+    }
+    game[bracket_game[:team_one]][:team] = Team.find(bracket_game[:team_one_id]).basic if bracket_game[:team_one_id]
+    game[bracket_game[:team_two]][:team] = Team.find(bracket_game[:team_two_id]).basic if bracket_game[:team_two_id]
+    game[:game] = {
+      status:""
+    }
+    game
+  end
+
   def make_bracket
     seeds = [
       {location:"W1A",rank:"1", name:""},
@@ -112,20 +144,6 @@ class BracketController < ApplicationController
       bracket = Bracket.find_by(location:seed[:location]).update(team_id:team.id)
     end
     populate_bracket_games
-  end
-
-  def games
-    games = BracketGame.all
-    game_list = {}
-    games.each do |game|
-      if game.game_id
-        game_data = Game.find(game.game_id)
-        score_data = game_data.mm_serialize
-        game_id = "#{game.team_one}-#{game.team_two}"
-        game_list[game_id] = score_data
-      end
-    end
-    render json: game_list
   end
 
 end

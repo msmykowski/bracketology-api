@@ -66,6 +66,13 @@ class Game < ActiveRecord::Base
     team_two = away
     team_one = away if bracket_game.team_one_id == away[:team][:id]
     team_two = home if bracket_game.team_two_id == home[:team][:id]
+    if team_one[:score][:final] > team_two[:score][:final]
+      team_one[:win] = true
+      team_two[:win] = false
+    elsif team_one[:score][:final] < team_two[:score][:final]
+      team_two[:win] = true
+      team_one[:win] = false
+    end
     game[bracket_game[:team_one]] = team_one
     game[bracket_game[:team_two]] = team_two
     game
