@@ -12,5 +12,7 @@ Rails.application.routes.draw do
 
   get 'bracket' => 'bracket#index'
   get 'bracket/info' => 'bracket#info'
+  get 'bracket/fill' => 'bracket#populate_bracket_games'
+  get 'bracket/games' => 'bracket#games'
 
 end

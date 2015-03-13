@@ -6,6 +6,7 @@ class Score < ActiveRecord::Base
       first:first,
       second:second,
       ot:ot,
+      final:first+second+ot,
       win:win
     }
     score

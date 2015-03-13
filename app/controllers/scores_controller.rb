@@ -21,6 +21,10 @@ class ScoresController < ApplicationController
   def update_game game
     db_game = Game.find_by(espn_id:game[:espn_id])
     if db_game
+      bracket_check = BracketGame.where("(team_one_id=? AND team_two_id=?) OR (team_one_id=? AND team_two_id=?)",game[:home][:id],game[:away][:id],game[:away][:id],game[:home][:id])
+      if bracket_check.length > 0
+        bracket_check[0].update(game_id:db_game.id)
+      end
       if game[:status].match(/[APM]{2}/)
       else
         home_score = game[:home][:score]

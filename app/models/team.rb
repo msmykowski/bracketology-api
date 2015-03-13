@@ -1,4 +1,5 @@
 class Team < ActiveRecord::Base
+  validates :espn_id, uniqueness: true
   has_many :players
   has_many :games
   belongs_to :bracket
@@ -9,7 +10,8 @@ class Team < ActiveRecord::Base
       id:id,
       rank:rank,
       wins:wins,
-      losses:losses
+      losses:losses,
+      mmrank:mmrank
     }
     team
   end

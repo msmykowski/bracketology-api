@@ -33,13 +33,41 @@ class Game < ActiveRecord::Base
     team
   end
 
+  def game_info
+    data = {
+      status:status,
+      score:{
+        home:home[:score][:first]+home[:score][:second]+home[:score][:ot],
+        away:away[:score][:first]+away[:score][:second]+away[:score][:ot]
+      }
+    }
+    data
+  end
+
   def serialize
     game = {
       espn_id:espn_id,
       home:home,
       away:away,
+      game:game_info,
       id:id
     }
+    game
+  end
+
+  def mm_serialize
+    bracket_game = BracketGame.find_by(game_id:id)
+    game = {
+      espn_id:espn_id,
+      game:game_info,
+      id:id
+    }
+    team_one = home
+    team_two = away
+    team_one = away if bracket_game.team_one_id == away[:team][:id]
+    team_two = home if bracket_game.team_two_id == home[:team][:id]
+    game[bracket_game[:team_one]] = team_one
+    game[bracket_game[:team_two]] = team_two
     game
   end
 
