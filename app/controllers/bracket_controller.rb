@@ -39,10 +39,79 @@ class BracketController < ApplicationController
     render json: bracket_games
   end
 
-  def info
-    game = Game.find(70)
-    bracket = Bracket.where("")
-
+  def make_bracket
+    seeds = [
+      {location:"W1A",rank:"1", name:""},
+      {location:"W1B",rank:"16",name:""},
+      {location:"W1C",rank:"2", name:""},
+      {location:"W1D",rank:"15",name:""},
+      {location:"W1E",rank:"3", name:""},
+      {location:"W1F",rank:"14",name:""},
+      {location:"W1G",rank:"4", name:""},
+      {location:"W1H",rank:"13",name:""},
+      {location:"W1I",rank:"5", name:""},
+      {location:"W1J",rank:"12",name:""},
+      {location:"W1K",rank:"6", name:""},
+      {location:"W1L",rank:"11",name:""},
+      {location:"W1M",rank:"7", name:""},
+      {location:"W1N",rank:"10",name:""},
+      {location:"W1O",rank:"8", name:""},
+      {location:"W1P",rank:"9", name:""},
+      {location:"M1A",rank:"1", name:""},
+      {location:"M1B",rank:"16",name:""},
+      {location:"M1C",rank:"2", name:""},
+      {location:"M1D",rank:"15",name:""},
+      {location:"M1E",rank:"3", name:""},
+      {location:"M1F",rank:"14",name:""},
+      {location:"M1G",rank:"4", name:""},
+      {location:"M1H",rank:"13",name:""},
+      {location:"M1I",rank:"5", name:""},
+      {location:"M1J",rank:"12",name:""},
+      {location:"M1K",rank:"6", name:""},
+      {location:"M1L",rank:"11",name:""},
+      {location:"M1M",rank:"7", name:""},
+      {location:"M1N",rank:"10",name:""},
+      {location:"M1O",rank:"8", name:""},
+      {location:"M1P",rank:"9", name:""},
+      {location:"E1A",rank:"1", name:""},
+      {location:"E1B",rank:"16",name:""},
+      {location:"E1C",rank:"2", name:""},
+      {location:"E1D",rank:"15",name:""},
+      {location:"E1E",rank:"3", name:""},
+      {location:"E1F",rank:"14",name:""},
+      {location:"E1G",rank:"4", name:""},
+      {location:"E1H",rank:"13",name:""},
+      {location:"E1I",rank:"5", name:""},
+      {location:"E1J",rank:"12",name:""},
+      {location:"E1K",rank:"6", name:""},
+      {location:"E1L",rank:"11",name:""},
+      {location:"E1M",rank:"7", name:""},
+      {location:"E1N",rank:"10",name:""},
+      {location:"E1O",rank:"8", name:""},
+      {location:"E1P",rank:"9", name:""},
+      {location:"S1A",rank:"1", name:""},
+      {location:"S1B",rank:"16",name:""},
+      {location:"S1C",rank:"2", name:""},
+      {location:"S1D",rank:"15",name:""},
+      {location:"S1E",rank:"3", name:""},
+      {location:"S1F",rank:"14",name:""},
+      {location:"S1G",rank:"4", name:""},
+      {location:"S1H",rank:"13",name:""},
+      {location:"S1I",rank:"5", name:""},
+      {location:"S1J",rank:"12",name:""},
+      {location:"S1K",rank:"6", name:""},
+      {location:"S1L",rank:"11",name:""},
+      {location:"S1M",rank:"7", name:""},
+      {location:"S1N",rank:"10",name:""},
+      {location:"S1O",rank:"8", name:""},
+      {location:"S1P",rank:"9", name:""}
+    ]
+    seeds.each do |seed|
+      team = Team.find_by(name:seed[:name])
+      team.update(mmrank:seed[:rank],mmid:seed[:location])
+      bracket = Bracket.find_by(location:seed[:location]).update(team_id:team.id)
+    end
+    populate_bracket_games
   end
 
   def games
