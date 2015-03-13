@@ -22,9 +22,8 @@ class BracketController < ApplicationController
     brackets = Bracket.all
     brackets.each do |bracket|
       if complete_brackets.include?(bracket.location)
-
       else
-        game_bracket = BracketGame.new(team_one:bracket.location,team_two:bracket.opponent)
+        game_bracket = BracketGame.new(team_one:bracket.location,team_two:bracket.opponent,advance:bracket.advance)
         complete_brackets.push(bracket.location)
         complete_brackets.push(bracket.opponent)
         game_bracket.save
@@ -48,12 +47,11 @@ class BracketController < ApplicationController
         game_data = Game.find(game.game_id)
         score_data = game_data.mm_serialize
         game_id = "#{game.team_one}-#{game.team_two}"
-        game_list[game_id] = score_data
       elsif (game.team_one_id || game.team_two_id)
         score_data = pending_game game
         game_id = "#{game.team_one}-#{game.team_two}"
-        game_list[game_id] = score_data
       end
+      game_list[game_id] = score_data
     end
     render json: game_list
   end

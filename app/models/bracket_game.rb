@@ -3,7 +3,6 @@ class BracketGame < ActiveRecord::Base
   validates :team_one, :team_two, uniqueness: true
 
   def game
-    p "#{game_id} <<<<<<<<<<<<<<<"
     if game_id
       game = Game.find(game_id).mm_serialize
     else
