@@ -75,13 +75,13 @@
     even_players = table.css('.evenrow')
 
     ncaa_player_array.push(create_team(odd_players, even_players))
-    sleep(0.5)
+    sleep(0.3)
   end
 
-  team_index = 0
-  player_id = 1
+  team_index = 1
   ncaa_player_array.each do |team|
     team.each do |player|
-      Player.create(name: player[0].encode( "UTF-8", "binary", :invalid => :replace, :undef => :replace), gp: player[1] , min: player[2] , ppg: player[3] , rpg: player[4] , apg: player[5] , spg: player[6] , bpg: player[7] , tpg: player[8] , fg: player[9] , ft: player[10] , threep: player[11], team_id: index )
+      Player.create(name: player[0].encode( "UTF-8", "binary", :invalid => :replace, :undef => :replace), gp: player[1] , min: player[2] , ppg: player[3] , rpg: player[4] , apg: player[5] , spg: player[6] , bpg: player[7] , tpg: player[8] , fg: player[9] , ft: player[10] , threep: player[11], team_id: team_index )
     end
+    team_index += 1
   end
