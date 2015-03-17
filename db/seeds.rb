@@ -36,7 +36,7 @@
   end
 
   ncaa_team_array.each do |team|
-    Team.update(name: team[0].encode( "UTF-8", "binary", :invalid => :replace, :undef => :replace), img_url: team[1], o_ppg: team[2], o_rpg: team[3], o_apg: team[4], o_fg: team[5], d_ppg: team[6], d_rpg: team[7], d_bpg: team[8], d_spg: team[9], o_ppg_rank: team[10], o_rpg_rank: team[11], o_apg_rank: team[12], o_fg_rank: team[13], d_ppg_rank: team[14], d_rpg_rank: team[15], d_bpg_rank: team[16], d_spg_rank: team[17])
+    Team.create(name: team[0].encode( "UTF-8", "binary", :invalid => :replace, :undef => :replace), img_url: team[1], o_ppg: team[2], o_rpg: team[3], o_apg: team[4], o_fg: team[5], d_ppg: team[6], d_rpg: team[7], d_bpg: team[8], d_spg: team[9], o_ppg_rank: team[10], o_rpg_rank: team[11], o_apg_rank: team[12], o_fg_rank: team[13], d_ppg_rank: team[14], d_rpg_rank: team[15], d_bpg_rank: team[16], d_spg_rank: team[17])
   end
 
 # add players
